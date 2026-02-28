@@ -1,3 +1,28 @@
 spring:
   application:
     name: finance-bridge
+
+  datasource:
+   url: jdbc:mysql://localhost:3306/finance?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+   username: root
+   password: root # docker-compose.yml에서 설정한 비밀번호
+   driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+   hibernate:
+    ddl-auto: update # [중요] 엔티티(Java) 변경 사항을 DB에 자동 반영 (개발 단계용)
+   properties:
+    hibernate:
+      format_sql: true # SQL 로그 예쁘게 출력
+      show_sql: true   # 실행되는 SQL 콘솔에 출력
+      #dialect: org.hibernate.dialect.MySQL8Dialect # Hibernate에게 “MySQL 8 쓰고 있다”고 알려주는 설정
+
+    servlet:
+      encoding:
+        force: true
+        charset: UTF-8
+        enabled: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug # SQL 실행 로그 레벨

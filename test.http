@@ -1,0 +1,9 @@
+### 회원가입 테스트
+POST http://localhost:8080/api/users/signup
+Content-Type: application/json
+
+{
+  "email": "test3@naver.com",
+  "password": "mypassword123",
+  "name": "신입개발자2"
+}

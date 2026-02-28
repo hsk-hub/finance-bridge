@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  # 1. 메인 데이터베이스 (MySQL 8.0)
+  finance-db:
+    image: mysql:8.0
+    container_name: finance-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: finance
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      TZ: Asia/Seoul
+    ports:
+      - "3306:3306"
+    command: # 한글 깨짐 방지 및 정렬 설정
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./db/data:/var/lib/mysql # 데이터를 로컬 폴더에 영구 저장
+
+  # 2. 캐시 및 락 관리 (Redis) - 추후 동시성 제어 때 사용
+  finance-redis:
+    image: redis:alpine
+    container_name: finance-redis
+    ports:
+      - "6379:6379"
