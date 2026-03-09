@@ -30,5 +30,12 @@ public class Wallet extends BaseEntity {
     @Version // Optimistic Lock을 위한 버전 관리
     private Long version;
 
+    public void addBalance(BigDecimal amount){
+        if(amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("충전 금액은 0원보다 커야 합니다.");
+        }
+        this.balance = this.balance.add(amount);
+    }
+
 }
 

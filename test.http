@@ -1,9 +1,17 @@
+### 예치금 중전 테스트 (유저 ID 1번에게 50,000원 충전)
+POST http://localhost:8080/api/wallets/1/deposit
+Content-Type: application/json
+
+
+{
+  "amount": 50000
+}
 ### 회원가입 테스트
 POST http://localhost:8080/api/users/signup
 Content-Type: application/json
 
 {
-  "email": "test3@naver.com",
+  "email": "test4@naver.com",
   "password": "mypassword123",
   "name": "신입개발자2"
 }
