@@ -15,3 +15,11 @@ Content-Type: application/json
   "password": "mypassword123",
   "name": "신입개발자2"
 }
+
+### 투자 테스트 (유저 1번이 대출상품 1번에 10000원 투자)
+POST http://localhost:8080/api/invests/1/loan/1
+Content-Type: application/json
+
+{
+  "amount": 10000
+}

@@ -37,5 +37,16 @@ public class Wallet extends BaseEntity {
         this.balance = this.balance.add(amount);
     }
 
+    public void withdraw(BigDecimal amount){
+        // 출금금액이 0이하인지
+        if(amount.compareTo(BigDecimal.ZERO) <= 0){
+            throw new IllegalArgumentException("출금 금액은 0보다 커야합니다.");
+        }
+        // 잔액보다 큰 금액을 출금할려는 지 확인
+        if(this.balance.compareTo(amount) < 0){
+            throw new IllegalArgumentException("잔액이 부족합니다.");
+        }
+        this.balance = this.balance.subtract(amount);
+    }
 }
 

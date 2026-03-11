@@ -48,4 +48,30 @@ public class Loan extends BaseEntity {
             this.version = 0L;
         }
     }
+
+    public void addInvestedAmount(BigDecimal amount){
+        // 모집 중인 상품인지 확인
+        if(this.status != LoanStatus.RECRUITING) {
+            throw new IllegalArgumentException("현재 투자할 수 없는 상품입니다");
+        }
+
+        // 투자금이 0원 이하인지 확인
+        if(amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("투자 금액은 0원보다 커야 합니다.");
+        }
+
+        // 목표 금액 초과 여부 확인
+        BigDecimal afterInvest = this.investedAmount.add(amount);
+        if (afterInvest.compareTo(this.loanAmount) > 0) {
+            throw new IllegalArgumentException("목표 모집 금액을 초과할 수 없습니다.");
+        }
+
+        // 투자금 증가
+        this.investedAmount = afterInvest;
+
+        // 100% 달성하면 상태 변경
+        if (this.investedAmount.compareTo(this.loanAmount) == 0) {
+            this.status = LoanStatus.FUNDING_COMPLETED;
+        }
+    }
 }
