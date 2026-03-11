@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) //API 서버 개발 시 CSRF 설정 비활성화
                 .authorizeHttpRequests(auth -> auth
                         // 회원가입, 에러 페이지, 그리고 지갑 관련 모든 API를 임시로 허용 (개발용)
-                        .requestMatchers("/api/users/signup", "/error","/api/wallets/**").permitAll() //회원가입 구멍 뚫어주기
+                        .requestMatchers("/api/users/signup", "/error","/api/wallets/**","/api/invests/**").permitAll() //회원가입 구멍 뚫어주기
                         .anyRequest().authenticated() // 나머지는 다 로그인해야 접근 가능
                 );
         return http.build();
