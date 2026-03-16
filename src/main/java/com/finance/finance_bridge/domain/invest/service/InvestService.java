@@ -26,10 +26,10 @@ public class InvestService {
     @Transactional
     public void invest(Long userId, Long loanId, BigDecimal amount) {
         // 지갑, 대출 상품 조회
-        Wallet wallet = walletRepository.findByUserId(userId)
+        Wallet wallet = walletRepository.findByUserIdWithLock(userId)
                 .orElseThrow(() -> new IllegalArgumentException("지갑을 찾을 수 없습니다."));
 
-        Loan loan = loanRepository.findById(loanId)
+        Loan loan = loanRepository.findByIdWithLock(loanId)
                 .orElseThrow(() -> new IllegalArgumentException("대출 상품을 찾을 수 없습니다."));
 
         // 지갑에서 출금
