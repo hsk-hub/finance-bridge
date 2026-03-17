@@ -1,5 +1,6 @@
 package com.finance.finance_bridge.domain.invest.controller;
 
+import com.finance.finance_bridge.domain.invest.dto.InvestResponse;
 import com.finance.finance_bridge.domain.invest.service.InvestService;
 import com.finance.finance_bridge.global.common.ApiResponse;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/invests")
@@ -29,5 +31,11 @@ public class InvestController {
     @Getter
     public static class InvestRequest {
         private BigDecimal amount;
+    }
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<ApiResponse<List<InvestResponse>>> getMyInvestments(@PathVariable Long userId){
+        List<InvestResponse> responses = investService.getMyInvestments(userId);
+        return ResponseEntity.ok(ApiResponse.success(responses));
     }
 }

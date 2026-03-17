@@ -30,7 +30,7 @@ public class InvestServiceConcurrencyTest {
         Long loanId = 1L;
         int threadCount = 100;
 
-        // 32개의 쓰레드 풀(일꾼)을 생성
+        // 32개의 쓰레드 풀을 생성
         ExecutorService executorService = Executors.newFixedThreadPool(32);
         // 100개의 작업이 모두 끝날 때까지 기다려 준다.
         CountDownLatch latch = new CountDownLatch(threadCount);

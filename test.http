@@ -23,3 +23,6 @@ Content-Type: application/json
 {
   "amount": 10000
 }
+
+### 내 투자 내역 조회
+GET http://localhost:8080/api/invests/users/1

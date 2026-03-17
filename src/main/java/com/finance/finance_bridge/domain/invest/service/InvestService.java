@@ -1,5 +1,6 @@
 package com.finance.finance_bridge.domain.invest.service;
 
+import com.finance.finance_bridge.domain.invest.dto.InvestResponse;
 import com.finance.finance_bridge.domain.invest.entity.Invest;
 import com.finance.finance_bridge.domain.invest.repository.InvestRepository;
 import com.finance.finance_bridge.domain.loan.entity.Loan;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -54,5 +56,22 @@ public class InvestService {
                 .build();
 
         investRepository.save(invest);
+    }
+
+    @Transactional(readOnly = true)
+    public List<InvestResponse> getMyInvestments(Long userId) {
+        // 1. repository에서 유저 ID로 Invest 목록을 가져온다.
+        List<Invest> invests = investRepository.findByInvestorIdWithLoan(userId);
+
+        // 2. Invest 엔티티를 InvestResponse DTO로 변환하여 반환한다.
+        // (주의: invest.getLoan().getStatus() 처럼 Loan 엔티티의 정보에 접근해야 N+1이 발생한다)
+        return invests.stream()
+                .map(invest -> new InvestResponse(
+                        invest.getId(),
+                        invest.getAmount(),
+                        invest.getLoan().getId(),
+                        invest.getLoan().getStatus()//연관된 Loan의 상태 조회
+                ))
+                .toList();
     }
 }
